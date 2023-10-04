@@ -24,7 +24,10 @@ public class OutputPayloadService
         try
         {
             outputPayloadRepository.save(outputpayload);
+            if ((globalCache.requestCount.get(outputpayload.getRequestId()) != null))
+            {
             globalCache.outputCommitted.put(outputpayload.getRequestId(), true);
+            }
             return true;
         }
         catch (Exception exception)

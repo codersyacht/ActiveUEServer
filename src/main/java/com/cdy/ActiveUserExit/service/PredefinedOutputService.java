@@ -42,5 +42,21 @@ public class PredefinedOutputService
     {
         return predefinedOutputRepository.findById(methodIdentifier);
     }
+
+    public Boolean removeRecord(String methodName)
+    {
+        try
+        {
+            predefinedOutputRepository.deleteById(methodName);
+            logger.info("Predefined Output for Method "+methodName +" deleted successfully");
+            return true;
+        }
+        catch (Exception exception)
+        {
+            logger.info("Error encountered while deleting method \n"+ exception.toString());
+            exception.printStackTrace();
+            return false;
+        }
+    }
     
 }

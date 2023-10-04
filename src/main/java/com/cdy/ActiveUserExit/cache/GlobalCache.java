@@ -51,8 +51,17 @@ public class GlobalCache
 
     public void clearCache(String requestId)
     {
+      System.out.println("===============Prior to Clear Cache Record for requestId=============");
+        for (Map.Entry<String, Boolean> entry : outputCommitted.entrySet()) 
+            System.out.println("Key = " + entry.getKey() +
+                             ", Value = " + entry.getValue());
+
         requestCount.remove(requestId);
         outputCommitted.remove(requestId);
+        System.out.println("===============After Clear Cache Record for requestId=============");
+        for (Map.Entry<String, Boolean> entry : outputCommitted.entrySet()) 
+            System.out.println("Key = " + entry.getKey() +
+                             ", Value = " + entry.getValue());
     }
 
 }

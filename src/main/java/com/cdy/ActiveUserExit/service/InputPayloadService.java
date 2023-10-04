@@ -19,13 +19,17 @@ public class InputPayloadService
     @Autowired
     InputPayloadRepository inputPayloadRepository;
    
-    public boolean saveInputPayload(InputPayload inputPayload)
+    public boolean saveInputPayload(InputPayload inputPayload, boolean cacheEnable)
     {     
          try
          {
           inputPayloadRepository.save(inputPayload);
           logger.info("Input payload successfully saved "+ inputPayload);
-          globalCache.outputCommitted.put(inputPayload.getRequestId(), false);
+          if(cacheEnable)
+           {
+            globalCache.outputCommitted.put(inputPayload.getRequestId(), false);
+            logger.info("Cache data created for "+inputPayload.getRequestId());
+           }
           return true;
          }
          catch (Exception exception)
