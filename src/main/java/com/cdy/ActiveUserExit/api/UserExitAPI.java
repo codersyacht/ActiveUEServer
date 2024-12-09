@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"*"})
 @RestController
-public class UserExitAPI implements Serializable {
+public class UserExitAPI implements Serializable 
+{
   @Autowired
   GlobalCache globalCache;
   
@@ -54,7 +55,8 @@ public class UserExitAPI implements Serializable {
   private static final Logger logger = LoggerFactory.getLogger(com.cdy.ActiveUserExit.api.UserExitAPI.class);
   
   @PostMapping({"/SaveUserDetails"})
-  public boolean saveUserDetails(HttpSession session, @RequestBody UserDetails userDetails) {
+  public boolean saveUserDetails(HttpSession session, @RequestBody UserDetails userDetails) 
+  {
     logger.info("Checking for existing user account");
     UserDetails validUser = getUserDetails(session, userDetails);
     if (validUser != null)
@@ -65,7 +67,8 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/GetUserDetails"})
-  public UserDetails getUserDetails(HttpSession session, @RequestBody UserDetails userDetails) {
+  public UserDetails getUserDetails(HttpSession session, @RequestBody UserDetails userDetails) 
+  {
     logger.info("Fetching data for" + userDetails.getUserId());
     UserDetails returnedUserDetails = this.userDetailsService.getUserDetails(userDetails.getUserId());
     if (returnedUserDetails == null)
@@ -79,13 +82,15 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/StoreMethodConfig"})
-  public boolean saveMethodConfig(HttpSession session, @RequestBody MethodConfig methodConfig) {
+  public boolean saveMethodConfig(HttpSession session, @RequestBody MethodConfig methodConfig) 
+  {
     logger.info("Storing data for" + methodConfig.getMethodIdentifier());
     return this.methodConfigService.saveMethodConfig(methodConfig);
   }
   
   @PostMapping({"/StoreMethodConfigWithPredefinedOutput"})
-  public boolean saveMethodConfigWithPredefinedOutput(HttpSession session, @RequestBody MethodConfigWithPredefinedOutput methodConfigWithPredefinedOutput) {
+  public boolean saveMethodConfigWithPredefinedOutput(HttpSession session, @RequestBody MethodConfigWithPredefinedOutput methodConfigWithPredefinedOutput) 
+  {
     logger.info("Storing data for" + methodConfigWithPredefinedOutput.getMethodIdentifier());
     MethodConfig methodConfig = new MethodConfig();
     methodConfig.setMethodIdentifier(methodConfigWithPredefinedOutput.getMethodIdentifier());
@@ -106,22 +111,26 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/FindAllMethodConfig"})
-  public MethodConfig[] findAllMethodConfig(HttpSession session, @RequestBody String userToken) {
+  public MethodConfig[] findAllMethodConfig(HttpSession session, @RequestBody String userToken) 
+  {
     return this.methodConfigService.findAllMethods(userToken);
   }
   
   @PostMapping({"/FindMethodConfigbyMethodName"})
-  public MethodConfig findMethodConfigbyMethodName(HttpSession session, @RequestBody MethodConfig methodConfig) {
+  public MethodConfig findMethodConfigbyMethodName(HttpSession session, @RequestBody MethodConfig methodConfig) 
+  {
     return this.methodConfigService.findMethodConfigbyMethodName(methodConfig.getMethodIdentifier(), methodConfig.getUserToken());
   }
   
   @PostMapping({"/FindMethodConfigWithPredefinedOutput"})
-  public MethodConfigWithPredefinedOutput findMethodConfigWithPredefinedOutput(HttpSession session, @RequestBody MethodConfig methodConfig) {
+  public MethodConfigWithPredefinedOutput findMethodConfigWithPredefinedOutput(HttpSession session, @RequestBody MethodConfig methodConfig) 
+  {
     return this.methodConfigService.findMethodConfigWithPredefinedOutput(methodConfig.getMethodIdentifier(), methodConfig.getUserToken());
   }
   
   @PostMapping({"/RemoveMethodRecordWithPredefinedOutput"})
-  public boolean removeMethodRecordWithPredefinedOutput(HttpSession session, @RequestBody MethodConfig methodConfig) {
+  public boolean removeMethodRecordWithPredefinedOutput(HttpSession session, @RequestBody MethodConfig methodConfig) 
+  {
     try {
       boolean status = this.predefinedOutputService.removeRecord(methodConfig.getMethodIdentifier(), methodConfig.getUserToken()).booleanValue();
       if (!status)
@@ -136,37 +145,44 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/RemovePredefinedOutput"})
-  public boolean RemovePredefinedOutput(HttpSession session, @RequestBody String methodName, @RequestBody String userId) {
+  public boolean RemovePredefinedOutput(HttpSession session, @RequestBody String methodName, @RequestBody String userId) 
+  {
     return this.predefinedOutputService.removeRecord(methodName, userId).booleanValue();
   }
   
   @PostMapping({"/StoreInputPayload"})
-  public boolean saveInputPayload(HttpSession session, @RequestBody InputPayload inputpayload) {
+  public boolean saveInputPayload(HttpSession session, @RequestBody InputPayload inputpayload) 
+  {
     return this.inputPayloadService.saveInputPayload(inputpayload, false);
   }
   
   @PostMapping({"/FindInputPayLoadbyRequestId"})
-  public InputPayload findInputPayLoadbyRequestId(HttpSession session, @RequestBody String requestId) {
+  public InputPayload findInputPayLoadbyRequestId(HttpSession session, @RequestBody String requestId) 
+  {
     return this.inputPayloadService.findInputPayloadByRequestId(requestId);
   }
   
   @PostMapping({"/FindInputWithOutputPayLoadbyRequestId"})
-  public InputWithOutputPayload findInputWithOutputbyRequestId(HttpSession session, @RequestBody String requestId) {
+  public InputWithOutputPayload findInputWithOutputbyRequestId(HttpSession session, @RequestBody String requestId) 
+  {
     return this.inputPayloadService.findInputWithOutputbyRequestId(requestId);
   }
   
   @PostMapping({"/StorePredefinedOutput"})
-  public boolean savePredefinedOutput(HttpSession session, @RequestBody PredefinedOutput predefinedOutputPayload) {
+  public boolean savePredefinedOutput(HttpSession session, @RequestBody PredefinedOutput predefinedOutputPayload) 
+  {
     return this.predefinedOutputService.savePredefinedOutput(predefinedOutputPayload);
   }
   
   @PostMapping({"/StoreOutputPayload"})
-  public boolean StoreOutputPayload(HttpSession sesssion, @RequestBody OutputPayload outputPayload) {
+  public boolean StoreOutputPayload(HttpSession sesssion, @RequestBody OutputPayload outputPayload) 
+  {
     return this.outputPayloadService.StoreOutputPayLoad(outputPayload);
   }
   
   @PostMapping({"/GetPredefinedOutput"})
-  public String getPredefinedOutput(HttpSession sesssion, @RequestBody PredefinedOutput predefined) {
+  public String getPredefinedOutput(HttpSession sesssion, @RequestBody PredefinedOutput predefined) 
+  {
     PredefinedOutput predefinedOutput = null;
     logger.info("getPredefinedOutput method called for methodIdentifier as " + predefined.getMethodIdentifier());
     predefinedOutput = this.predefinedOutputService.findOutputPayload(predefined.getMethodIdentifier(), predefined.getUserToken());
@@ -176,7 +192,8 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/GetActiveRequests"})
-  public ActiveRequestsList GetActiveRequests(HttpSession sesssion, @RequestBody String userToken) {
+  public ActiveRequestsList GetActiveRequests(HttpSession sesssion, @RequestBody String userToken) 
+  {
     logger.info("Get active requests triggered for user " + userToken);
     Map<String, Boolean> temp = (Map<String, Boolean>)this.globalCache.outputCommitted.entrySet().stream().filter(map -> ((String)map.getKey()).startsWith(userToken)).collect(Collectors.toMap(map -> (String)map.getKey(), map -> (Boolean)map.getValue()));
     ActiveRequestsList aqList = new ActiveRequestsList();
@@ -187,7 +204,8 @@ public class UserExitAPI implements Serializable {
   }
   
   @GetMapping({"/GetAllActiveRequests"})
-  public ActiveRequestsList GetAllActiveRequests(HttpSession sesssion) {
+  public ActiveRequestsList GetAllActiveRequests(HttpSession sesssion) 
+  {
     Map<String, Boolean> temp = this.globalCache.outputCommitted;
     ActiveRequestsList aqList = new ActiveRequestsList();
     aqList.ActiveRequests = new String[temp.size()];
@@ -197,18 +215,21 @@ public class UserExitAPI implements Serializable {
   }
   
   @PostMapping({"/InvokeUserExit"})
-  public String InvokeUserExit(HttpSession session, @RequestBody InputPayload inputPayload) throws InterruptedException, ParseException {
+  public String InvokeUserExit(HttpSession session, @RequestBody InputPayload inputPayload) throws InterruptedException, ParseException 
+  {
     int requestCounter = 0;
     logger.info("UserExit Triggered for method " + inputPayload.getMethodIdentifier() + " with requestId " + inputPayload.getRequestId() + " for user " + inputPayload.getUserToken());
     MethodConfig methodConfig = this.methodConfigService.findMethodConfigbyMethodName(inputPayload.getMethodIdentifier(), inputPayload.getUserToken());
     logger.info("Method config for " + inputPayload.getMethodIdentifier() + " for user " + methodConfig.getUserToken() + " retrieved with the following settings, inputAsOutput: " + methodConfig.getInputAsOutput() + " outputPredefined: " + methodConfig.getOutputPredefined());
-    if (methodConfig.equals(null)) {
+    if (methodConfig.equals(null)) 
+    {
       logger.info("Method not configured for the userId on the User-Exit server");
       return null;
     } 
     String requestId = inputPayload.getRequestId();
     String outputData = null;
-    if (methodConfig.getInputAsOutput().booleanValue()) {
+    if (methodConfig.getInputAsOutput().booleanValue()) 
+    {
       boolean bool = this.inputPayloadService.saveInputPayload(inputPayload, false);
       if (!bool)
         return null; 
@@ -217,7 +238,8 @@ public class UserExitAPI implements Serializable {
         return null; 
       return outputPayload.getOutputPayload();
     } 
-    if (methodConfig.getOutputPredefined().booleanValue()) {
+    if (methodConfig.getOutputPredefined().booleanValue()) 
+    {
       boolean bool = this.inputPayloadService.saveInputPayload(inputPayload, false);
       if (!bool)
         return null; 
@@ -230,7 +252,8 @@ public class UserExitAPI implements Serializable {
     requestCounter = this.globalCache.getHTTPRequestCounter(requestId);
     logger.info("HTTP Request Count for " + requestId + "=" + this.globalCache.getHTTPRequestCounter(requestId));
     logger.info("Awiting output payload in loop");
-    while (this.globalCache.outputCommitted.get(requestId) == null || !((Boolean)this.globalCache.outputCommitted.get(requestId)).booleanValue()) {
+    while (this.globalCache.outputCommitted.get(requestId) == null || !((Boolean)this.globalCache.outputCommitted.get(requestId)).booleanValue()) 
+    {
       logger.info("Counter Information: ");
       logger.info("Thread Id: " + Thread.currentThread().getName());
       logger.info("Thresd Request Count: " + requestCounter);
@@ -246,7 +269,8 @@ public class UserExitAPI implements Serializable {
       Date d1 = dateFormat.parse((String)this.globalCache.requestIdTime.get(requestId));
       Date d2 = dateFormat.parse(threadpresentTime);
       long diff = d2.getTime() - d1.getTime();
-      if (diff >= 3600000L) {
+      if (diff >= 3600000L) 
+      {
         logger.info("Returning due to Elapsed Tme of 1 Hour");
         this.globalCache.clearCache(requestId);
         return null;
