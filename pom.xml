@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.1.0</version>
 		<relativePath/>
 	</parent>
 	<groupId>com.cdy</groupId>
@@ -52,6 +52,7 @@
     			<groupId>org.springframework.session</groupId>
     			<artifactId>spring-session-jdbc</artifactId>
 	   </dependency>
+	   
 	</dependencies>
 	<build>
 		<plugins>
@@ -64,12 +65,13 @@
    				<artifactId>liquibase-maven-plugin</artifactId>
    				<configuration>
       				<driver>org.postgresql.Driver</driver>
-      				<url>jdbc:postgresql://localhost:5432/postgres</url>
+      				<url>jdbc:postgresql://9.30.122.200:5432/postgres</url>
       				<username>postgres</username>
-      				<password>postgres</password>
-      				<outputChangeLogFile>src/main/resources/liquibase-outputChangeLog.sql</outputChangeLogFile>
+      				<password>password</password>
+      				<outputChangeLogFile>src/main/resources/master-changelog.sql</outputChangeLogFile>
 				</configuration>	
 			</plugin>
 		</plugins>
+
 	</build>
 </project>
